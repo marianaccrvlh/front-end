@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)file:///tmp/guest-6peddh/Downloads/get_list%20(1).html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Requisição GET para JSON</title>
+</head>
+<body>
+
+  <div id="container"><div class="jogador"><img src="./Requisição GET para JSON_files/_330587629904.png" alt="Vini Jr"><p>Nome: Vini Jr</p><p>Idade: 23</p><p>Posição: Atacante</p></div><div class="jogador"><img src="./Requisição GET para JSON_files/rodrygo-em-acao-pelo-real-madrid-1695076025267_v2_450x450.jpg" alt="Rodrygo"><p>Nome: Rodrygo</p><p>Idade: 21</p><p>Posição: Atacante</p></div><div class="jogador"><img src="./Requisição GET para JSON_files/a74277e4601af5adb969288da85b91f3.jpg" alt="Leo"><p>Nome: Leo</p><p>Idade: 16</p><p>Posição: Zagueiro</p></div><div class="jogador"><img src="./Requisição GET para JSON_files/104235162-brazils-forward-neymar-celebrates-after-scoring-a-goal-during-the-2026-fifa-world-cup.jpg" alt="Neymar"><p>Nome: Neymar</p><p>Idade: 32</p><p>Posição: atacante</p></div><div class="jogador"><img src="./Requisição GET para JSON_files/4.png" alt="gabi gol"><p>Nome: gabi gol</p><p>Idade: 28</p><p>Posição: banco</p></div></div>
+
+  <script>
+    // URL para a requisição GET
+    const url = 'https://api.npoint.io/d260affa584617e12e07';
+
+    // Função para tratar a resposta da requisição
+    function handleResponse(response) {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    }
+
+    // Função para criar a lista de jogadores
+    function createPlayerList(data) {
+      const jogadores = data.jogadores;
+      const container = document.getElementById('container');
+
+      jogadores.forEach(jogador => {
+        const jogadorDiv = document.createElement('div');
+        jogadorDiv.classList.add('jogador');
+
+        const imagemJogador = document.createElement('img');
+        imagemJogador.src = jogador.image;
+        imagemJogador.alt = jogador.nome;
+
+        const nomeJogador = document.createElement('p');
+        nomeJogador.textContent = `Nome: ${jogador.nome}`;
+
+        const idadeJogador = document.createElement('p');
+        idadeJogador.textContent = `Idade: ${jogador.idade}`;
+
+        const posicaoJogador = document.createElement('p');
+        posicaoJogador.textContent = `Posição: ${jogador.posicao}`;
+
+        jogadorDiv.appendChild(imagemJogador);
+        jogadorDiv.appendChild(nomeJogador);
+        jogadorDiv.appendChild(idadeJogador);
+        jogadorDiv.appendChild(posicaoJogador);
+
+        container.appendChild(jogadorDiv);
+      });
+    }
+
+    // Realiza a requisição GET
+    fetch(url)
+      .then(handleResponse)
+      .then(createPlayerList)
+      .catch(error => console.error('Erro ao fazer a requisição:', error));
+  </script>
+
+  <style>
+    .jogador:hover {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+background-color: pink;
+color: white;
+font-size: 50px;
+    }
+
+    .jogador img {
+      width: 300px;
+      height: auto;
+      margin-bottom: 30px;
+    }
+  </style>
+
+
+</body></html>

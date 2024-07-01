@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Requisição GET para JSON</title>
+</head>
+<body>
+
+  <header>
+
+    <img src="https://somosmusica.cdbaby.com/wp-content/uploads/2018/07/Spotify_Logo_feature.png" class="logo">
+  <button>inicio</button>
+  <button>configuração</button>
+  <button>perfil</button>
+  <button>Histórico</button>
+  
+  
+  
+  
+  
+  </header>
+
+  <div id="container"></div>
+
+
+
+  <footer>
+
+    <center>
+    <h3>sobre nós</h3> 
+    </br>
+    <p>nós somos uma empresa de compartilhamento de conteúdo</p>
+    </center>   
+    
+    </footer>
+
+  <script>
+    // URL para a requisição GET
+    const url = 'https://api.npoint.io/3d61d1b84dda0fb1836b';
+
+    // Função para tratar a resposta da requisição
+    function handleResponse(response) {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    }
+
+    // Função para criar a lista de jogadores
+    function createPlayerList(data) {
+      const bebida = data.bebidas;
+      const container = document.getElementById('container');
+
+      bebida.forEach(bebida => {
+        const jogadorDiv = document.createElement('div');
+        jogadorDiv.classList.add('jogador');
+
+        const imagemJogador = document.createElement('img');
+        imagemJogador.src = bebida.imagem;
+        imagemJogador.alt = bebida.nome;
+
+        const nomeJogador = document.createElement('p');
+        nomeJogador.textContent = `Preço: ${bebida.preco}`;
+
+        jogadorDiv.appendChild(imagemJogador);
+        jogadorDiv.appendChild(nomeJogador);
+
+        container.appendChild(jogadorDiv);
+      });
+    }
+
+    // Realiza a requisição GET
+    fetch(url)
+      .then(handleResponse)
+      .then(createPlayerList)
+      .catch(error => console.error('Erro ao fazer a requisição:', error));
+  </script>
+
+  <style>
+    .jogador {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .jogador img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .header{
+
+display: flex;
+
+}
+
+.logo{
+
+width: 100px;
+}
+  </style>
+</body>
+</html>

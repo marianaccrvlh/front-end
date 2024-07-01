@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Requisição GET para JSON</title>
+</head>
+<body>
+
+  <div id="container"></div>
+
+  <script>
+    // URL para a requisição GET
+    const url = 'https://api.npoint.io/a410eda473ae37d9733f';
+
+    // Função para tratar a resposta da requisição
+    function handleResponse(response) {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    }
+
+    // Função para criar a lista de jogadores
+    function createPlayerList(data) {
+      const jogadores = data.usuários;
+      const container = document.getElementById('container');
+
+      jogadores.forEach(jogador => {
+        const jogadorDiv = document.createElement('div');
+        jogadorDiv.classList.add('jogador');
+
+        const imagemJogador = document.createElement('img');
+        imagemJogador.src = jogador.image;
+        imagemJogador.alt = jogador.username;
+
+        const nomeJogador = document.createElement('p');
+        nomeJogador.textContent = `Nome: ${jogador.nome}`;
+
+        const idadeJogador = document.createElement('p');
+        idadeJogador.textContent = `Idade: ${jogador.idade}`;
+
+        const posicaoJogador = document.createElement('p');
+        posicaoJogador.textContent = `Posição: ${jogador.posicao}`;
+
+        jogadorDiv.appendChild(imagemJogador);
+        jogadorDiv.appendChild(nomeJogador);
+        jogadorDiv.appendChild(idadeJogador);
+        jogadorDiv.appendChild(posicaoJogador);
+
+        container.appendChild(jogadorDiv);
+      });
+    }
+
+    // Realiza a requisição GET
+    fetch(url)
+      .then(handleResponse)
+      .then(createPlayerList)
+      .catch(error => console.error('Erro ao fazer a requisição:', error));
+  </script>
+
+  <style>
+    .jogador {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    .jogador img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+  </style>
+</body>
+</html>
